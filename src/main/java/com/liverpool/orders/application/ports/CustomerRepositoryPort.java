@@ -7,7 +7,6 @@ import java.util.Optional;
 public interface CustomerRepositoryPort {
 
     Customer save(Customer customer);
-
     Optional<Customer> findByUserId(String userId);
 
 }
