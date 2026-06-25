@@ -1,5 +1,6 @@
 package com.liverpool.orders.infrastructure.config;
 
+import lombok.Builder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -7,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
+@Builder
 public class WebClientConfig {
     @Bean
     public WebClient webClientOrder() {

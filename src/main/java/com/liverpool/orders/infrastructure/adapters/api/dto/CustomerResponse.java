@@ -1,10 +1,9 @@
-package com.liverpool.orders.domain.model;
+package com.liverpool.orders.infrastructure.adapters.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import java.util.List;
 
@@ -12,17 +11,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class CustomerResponse{
+
     private String userId;
     private String firstName;
     private String lastName;
     private String middleName;
     private String email;
-    private List<Order> orders;
     private String shippingAddress;
-
-    @Override
-    public String toString(){
-        return ReflectionToStringBuilder.toString(this);
-    }
+    private List<OrderResponse> orders;
 }
