@@ -1,7 +1,6 @@
 package com.liverpool.orders.infrastructure.adapters.api.controllers;
 
 import com.liverpool.orders.application.ports.ItemsApiPort;
-import com.liverpool.orders.domain.model.Item;
 import com.liverpool.orders.infrastructure.adapters.api.dto.ItemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,12 @@ public class ItemController {
     @Autowired
     private ItemsApiPort itemsApiPort;
 
-    @PostMapping(consumes = "application/json")
+    /*@PostMapping(consumes = "application/json")
     public ResponseEntity<Item> create(
             @RequestBody Item customer) {
 
         return ResponseEntity.ok(null);
-    }
+    }*/
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<ItemResponse>> get(

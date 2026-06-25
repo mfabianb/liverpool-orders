@@ -5,6 +5,14 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/liverpool
+      host: localhost
+      port: 27017
+      database: liverpool
+      username: admin     # MongoDB username
+      password: admin     # MongoDB password
+      authentication-database: admin  #Authentication database
+      auto-index-creation: true   # Automatically create indexes
+      write-concern: NORMAL       # Write concern level (e.g., MAJORITY, NORMAL)
 
 external:
   orders:

@@ -1,20 +1,23 @@
 package com.liverpool.orders.infrastructure.adapters.api.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-public record CustomerResponse(
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CustomerResponse{
 
-        String userId,
-
-        String firstName,
-
-        String lastName,
-
-        String middleName,
-
-        String email,
-
-        String shippingAddress,
-
-        List<String> orders
-) {}
+    private String userId;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String email;
+    private String shippingAddress;
+    private List<OrderResponse> orders;
+}

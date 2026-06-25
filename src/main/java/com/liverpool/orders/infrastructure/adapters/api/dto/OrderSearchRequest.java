@@ -11,16 +11,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderResponse {
+public class OrderSearchRequest {
 
     private String orderRef;
-    //private String userId;
+    private String userId;
     private String canal;
     private String orderStatus;
-    //private boolean marketPlace;
-    //private boolean giftRegistry;
-    private List<String> items;
-    //private String storeName;
-    //private String id;
+    private boolean marketPlace;
+    private boolean giftRegistry;
+    private String storeName;
+    private String id;
 
 }

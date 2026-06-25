@@ -1,73 +1,28 @@
 package com.liverpool.orders.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
     private String userId;
-
     private String firstName;
     private String lastName;
     private String middleName;
-
     private String email;
-
+    private List<Order> orders;
     private String shippingAddress;
 
-    private List<String> orders;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getShippingAddress() {
-        return shippingAddress;
-    }
-
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
-    }
-
-    public List<String> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<String> orders) {
-        this.orders = orders;
+    @Override
+    public String toString(){
+        return ReflectionToStringBuilder.toString(this);
     }
 }
