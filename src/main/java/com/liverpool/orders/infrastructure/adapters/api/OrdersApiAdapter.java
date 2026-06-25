@@ -5,6 +5,7 @@ import com.liverpool.orders.application.ports.OrdersApiPort;
 import com.liverpool.orders.domain.exceptions.CustomerNotFoundException;
 import com.liverpool.orders.domain.model.Order;
 import com.liverpool.orders.infrastructure.adapters.api.dto.OrderResponse;
+import com.liverpool.orders.infrastructure.adapters.elasticsearch.dto.OrderSearchResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,20 @@ public class OrdersApiAdapter implements OrdersApiPort {
     public List<Order> getOrders(String requestParams) {
         getOrdersResponse(requestParams).stream().forEach(log::info);
         return getOrdersResponse(requestParams).stream().map(orderMapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderSearchResponse> getOrdersSearch() {
+        return webClient
+                .get()
+                .uri(ordersUrl + "?" )
+                .retrieve()
+                .onStatus(HttpStatus.NOT_FOUND::equals, clientResponse -> {
+                    throw new CustomerNotFoundException("");
+                })
+                .bodyToFlux(OrderSearchResponse.class)
+                .collectList()
+                .block();
     }
 
 }

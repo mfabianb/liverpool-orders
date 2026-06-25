@@ -1,4 +1,4 @@
-package com.liverpool.orders.infrastructure.adapters.api.dto;
+package com.liverpool.orders.infrastructure.adapters.elasticsearch.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,5 +21,6 @@ public class OrderSearchRequest {
     private boolean giftRegistry;
     private String storeName;
     private String id;
+    private List<String> items;
 
 }

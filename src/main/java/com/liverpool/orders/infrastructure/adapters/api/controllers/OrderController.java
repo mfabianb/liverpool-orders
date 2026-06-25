@@ -1,7 +1,9 @@
 package com.liverpool.orders.infrastructure.adapters.api.controllers;
 
+import com.liverpool.orders.application.ports.OrderSearchPort;
 import com.liverpool.orders.application.ports.OrdersApiPort;
 import com.liverpool.orders.infrastructure.adapters.api.dto.OrderResponse;
+import com.liverpool.orders.infrastructure.adapters.elasticsearch.dto.OrderSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +21,34 @@ public class OrderController {
     @Autowired
     private OrdersApiPort ordersApiPort;
 
-    @GetMapping
-    public ResponseEntity<List<OrderResponse>> getList(
-            @RequestParam(value = "userId", required = false) String userId) {
+    @Autowired
+    private OrderSearchPort orderSearchPort;
 
-        StringBuilder requestParams = new StringBuilder();
+    @GetMapping("/search")
+    public List<OrderSearchResponse> search(
+            @RequestParam(required = false) String orderRef,
+            @RequestParam(required = false) String orderStatus,
+            @RequestParam(required = false) String storeName,
+            @RequestParam(required = false) String displayName) {
 
-        if (Objects.nonNull(userId) && !userId.isEmpty()) {
-            requestParams.append("userId=").append(userId);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if(Objects.nonNull(orderRef) && !orderRef.isEmpty()){
+            stringBuilder.append("orderRef=").append(orderRef);
         }
 
-        return ResponseEntity.ok(ordersApiPort.getOrdersResponse(requestParams.toString()));
+        if(Objects.nonNull(orderStatus) && !orderStatus.isEmpty()){
+            stringBuilder.append("orderStatus=").append(orderStatus);
+        }
+
+        if(Objects.nonNull(storeName) && !storeName.isEmpty()){
+            stringBuilder.append("storeName=").append(storeName);
+        }
+
+        if(Objects.nonNull(displayName) && !displayName.isEmpty()){
+            stringBuilder.append("displayName=").append(displayName);
+        }
+
+        return orderSearchPort.search(orderRef, orderStatus, storeName, displayName);
     }
 }

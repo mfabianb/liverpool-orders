@@ -47,7 +47,12 @@ dependencies {
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.6.3"
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
-	implementation("org.springframework.boot:spring-boot-starter-zipkin:4.1.0-M4")
+	//implementation("org.springframework.boot:spring-boot-starter-zipkin:4.1.0-M4")
+
+	implementation "org.springframework.boot:spring-boot-starter-data-elasticsearch"
+	//implementation "org.springframework.data:spring-data-elasticsearch"
+
+	//implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch:4.1.0")
 }
 
 tasks.named('test') {

@@ -37,7 +37,7 @@ public class CustomerController {
 
     @PatchMapping("/{userId}")
     public ResponseEntity<CustomerResponse> patch(
-            @PathVariable() String userId, @Valid @RequestBody CustomerRequest customer) {
+            @PathVariable String userId, @Valid @RequestBody CustomerRequest customer) {
 
         return ResponseEntity.ok(
                 customerApiAdapter.patch(userId, customer));

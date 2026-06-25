@@ -7,6 +7,8 @@ import com.liverpool.orders.infrastructure.adapters.api.dto.CustomerRequest;
 import com.liverpool.orders.infrastructure.adapters.api.dto.CustomerResponse;
 import com.liverpool.orders.infrastructure.adapters.api.dto.ItemResponse;
 import com.liverpool.orders.infrastructure.adapters.api.dto.OrderResponse;
+import com.liverpool.orders.infrastructure.adapters.elasticsearch.document.ItemSearchDocument;
+import com.liverpool.orders.infrastructure.adapters.elasticsearch.document.OrderSearchDocument;
 import com.liverpool.orders.infrastructure.adapters.mongo.documents.CustomerDocument;
 import com.liverpool.orders.infrastructure.adapters.mongo.documents.OrderDocument;
 import org.mapstruct.Mapper;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CustomMapper {
@@ -143,5 +146,38 @@ public interface CustomMapper {
                 customer.getFirstName(), customer.getLastName(),
                 customer.getMiddleName(), customer.getEmail(),
                 customer.getShippingAddress(), orderResponseList);
+    }
+
+    default OrderSearchDocument toOrderSearchDocument(OrderResponse order, List<ItemResponse> items) {
+        List<ItemSearchDocument> itemSearchDocumentList = new ArrayList<>();
+
+        order.getItems().forEach(s -> {
+            itemSearchDocumentList.addAll(createItemSearchDocumentList(s, items));
+        });
+
+        return OrderSearchDocument.builder()
+                .id(order.getId())
+                .orderRef(order.getOrderRef())
+                .orderStatus(order.getOrderStatus())
+                .storeName(order.getStoreName())
+                .items(itemSearchDocumentList)
+                .canal(order.getCanal())
+                .build();
+
+    }
+
+    default List<ItemSearchDocument> createItemSearchDocumentList(String id, List<ItemResponse> items) {
+        return items.stream().filter(
+                        itemResponse -> id.contains(itemResponse.getSkuId()))
+                .map(itemResponse -> {
+                    return ItemSearchDocument.builder()
+                            .itemId(itemResponse.getItemId())
+                            .skuId(itemResponse.getSkuId())
+                            .quantity(itemResponse.getQuantity())
+                            .displayName(itemResponse.getDisplayName())
+                            .deliveryStatus(itemResponse.getDeliveryStatus())
+                            .id(itemResponse.getId())
+                            .build();
+                }).collect(Collectors.toList());
     }
 }
