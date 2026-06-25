@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: springmongo  # Database to be created on startup
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodb_data:/data/db
+      - ./init:/docker-entrypoint-initdb.d  # Mount init scripts folder
+    networks:
+      - mongodb_network
+
+  liverpool-orders:
+    build: .
+    container_name: liverpool-orders
+    depends_on:
+      - mongodb
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_DATA_MONGODB_URI: mongodb://127.0.0.1:27017/liverpool
+    networks:
+      - mongodb_network
+
+volumes:
+  mongo-data: {}
+
+networks:
+  mongodb_network:
+    driver: bridge

@@ -4,8 +4,8 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/liverpool
-      host: localhost
+      uri: mongodb://127.0.0.1:27017/liverpool
+      host: 127.0.0.1
       port: 27017
       database: liverpool
       username: admin     # MongoDB username
@@ -13,6 +13,11 @@ spring:
       authentication-database: admin  #Authentication database
       auto-index-creation: true   # Automatically create indexes
       write-concern: NORMAL       # Write concern level (e.g., MAJORITY, NORMAL)
+
+  elasticsearch:
+    uris: https://7543ed24264b45a1939b813e36e5b4b7.us-central1.gcp.cloud.es.io:443
+    username: elastic
+    password: QBWhKrSJmvDwNclcpBlgj1YJ
 
 external:
   orders:
